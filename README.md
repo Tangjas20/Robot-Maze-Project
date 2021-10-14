@@ -1,8 +1,6 @@
-# ELEC1601 Project Template
+# ELEC1601 Robot-Maze Project
 
-An easy to use template repository that allows you to work on code for your project on any OS and any IDE.
-
-To get started, just click "Use this template" button!
+Template taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template 
 
 ## Table of Contents
 
