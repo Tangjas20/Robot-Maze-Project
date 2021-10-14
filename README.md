@@ -1,6 +1,6 @@
 # ELEC1601 Robot-Maze Project
 
-Template by Chris.P taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template
+Template by Chris. P taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template
 
 ## Table of Contents
 
@@ -186,3 +186,5 @@ To run the compiled program from your terminal:
 ```
 
 You can also remove the compiled files from your terminal by running `mingw32-make clean` on Windows, or `make clean` on macOS/Linux.
+
+Marks awarded for both maze completion and completion time.
