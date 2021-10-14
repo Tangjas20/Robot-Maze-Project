@@ -1,6 +1,6 @@
 # ELEC1601 Robot-Maze Project
 
-Template taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template 
+Template by Chris.P taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template
 
 ## Table of Contents
 
