@@ -1,6 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
-#include "time.h"
+#include <sys/time.h>
+// #include "time.h"
 
 // Conditional compilation directives to ensure the right "include" path for Windows or Unix is used, as well as clock calculation
 #ifdef _WIN32
@@ -42,9 +43,12 @@ int main(int argc, char *argv[]) {
 
     struct Robot robot;
     struct Wall_collection *head = NULL;
-    int front_left_sensor, front_right_sensor=0;
-    clock_t start_time, end_time;
-    int msec;
+    int front_left_sensor, side_left_sensor, side_right_sensor, front_right_sensor=0;
+    struct timeval start_time, end_time;
+    gettimeofday(&start_time, 0);
+    unsigned long msec;
+    // clock_t start_time, end_time;
+    // int msec;
 
     // SETUP MAZE
     // You can create your own maze here. line of code is adding a wall.
@@ -79,8 +83,10 @@ int main(int argc, char *argv[]) {
 
         //Check if robot reaches endpoint. and check sensor values
         if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT/2+100, 10, 100)){
-            end_time = clock();
-            msec = (end_time-start_time) * CLOCK_CALCULATION;
+            gettimeofday(&end_time, 0);
+            msec = ((end_time.tv_sec - start_time.tv_sec)*1000)+(end_time.tv_usec - start_time.tv_usec)/1000;
+            // end_time = clock();
+            // msec = (end_time-start_time) * CLOCK_CALCULATION;
             robotSuccess(&robot, msec);
         }
         else if(checkRobotHitWalls(&robot, head))
@@ -89,11 +95,19 @@ int main(int argc, char *argv[]) {
         else {
             front_left_sensor = checkRobotSensorFrontLeftAllWalls(&robot, head);
             if (front_left_sensor>0)
-                printf("Getting close on the left. Score = %d\n", front_left_sensor);
+                printf("Getting close on the front left. Score = %d\n", front_left_sensor);
 
             front_right_sensor = checkRobotSensorFrontRightAllWalls(&robot, head);
             if (front_right_sensor>0)
-                printf("Getting close on the right. Score = %d\n", front_right_sensor);
+                printf("Getting close on the front right. Score = %d\n", front_right_sensor);
+
+            side_left_sensor = checkRobotSensorSideLeftAllWalls(&robot, head);
+            if (side_left_sensor>0)
+                printf("Getting close on the side left. Score = %d\n", side_left_sensor);
+
+            side_right_sensor = checkRobotSensorSideRightAllWalls(&robot, head);
+            if (side_right_sensor>0)
+                printf("Getting close on the side right. Score = %d\n", side_right_sensor);
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);
@@ -122,7 +136,8 @@ int main(int argc, char *argv[]) {
             }
             if(state[SDL_SCANCODE_RETURN]){
                 robot.auto_mode = 1;
-                start_time = clock();
+                gettimeofday(&start_time, 0);
+                // start_time = clock();
             }
         }
 
