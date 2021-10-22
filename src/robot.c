@@ -310,7 +310,7 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
     SDL_RenderDrawLine(renderer,robot->x+ROBOT_WIDTH/2, robot->y+ROBOT_HEIGHT/2, xDirInt, yDirInt);
     */
 
-    //Rotating Square
+    //Rotating Square - This is for drawing the actual robot square.
     //Vector rotation to work out corners x2 = x1cos(angle)-y1sin(angle), y2 = x1sin(angle)+y1cos(angle)
     robotCentreX = robot->x+ROBOT_WIDTH/2;
     robotCentreY = robot->y+ROBOT_HEIGHT/2;
