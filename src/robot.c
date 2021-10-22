@@ -220,7 +220,7 @@ int checkRobotSensorSideLeftLowerAllWalls(struct Robot * robot, struct Wall_coll
     return score;
 }
 
-int checkRobotSensorSideRightAllWalls(struct Robot * robot, struct Wall_collection * head) {
+int checkRobotSensorSideRightTopAllWalls(struct Robot * robot, struct Wall_collection * head) {
     struct Wall_collection *ptr, *head_store;
     int i;
     double xDir, yDir;
@@ -237,8 +237,41 @@ int checkRobotSensorSideRightAllWalls(struct Robot * robot, struct Wall_collecti
     for (i = 0; i < 5; i++)
     {
         ptr = head_store;
-        xDir = round(robotCentreX+(ROBOT_WIDTH/2+SENSOR_VISION-sensorSensitivityLength*i-2)*cos((robot->angle)*PI/180)-sin((robot->angle)*PI/180));
-        yDir = round(robotCentreY+(ROBOT_WIDTH/2+SENSOR_VISION-sensorSensitivityLength*i-2)*sin((robot->angle)*PI/180)+cos((robot->angle)*PI/180));
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2+SENSOR_VISION-sensorSensitivityLength*i-2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2+SENSOR_VISION-sensorSensitivityLength*i-2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+        hit = 0;
+
+        while(ptr != NULL) {
+            hit = (hit || checkRobotSensor(xTL, yTL, sensorSensitivityLength, &ptr->wall));
+            ptr = ptr->next;
+        }
+        if (hit)
+            score = i;
+    }
+    return score;
+}
+
+int checkRobotSensorSideRightLowerAllWalls(struct Robot * robot, struct Wall_collection * head) {
+    struct Wall_collection *ptr, *head_store;
+    int i;
+    double xDir, yDir;
+    int robotCentreX, robotCentreY, xTL, yTL;
+    int score, hit;
+    int sensorSensitivityLength;
+
+    head_store = head;
+    robotCentreX = robot->x+ROBOT_WIDTH/2;
+    robotCentreY = robot->y+ROBOT_HEIGHT/2;
+    score = 0;
+    sensorSensitivityLength =  floor(SENSOR_VISION/5);
+
+    for (i = 0; i < 5; i++)
+    {
+        ptr = head_store;
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2+SENSOR_VISION-sensorSensitivityLength*i-2)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2+SENSOR_VISION-sensorSensitivityLength*i-2)*sin((robot->angle)*PI/180)+(ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
         xTL = (int) xDir;
         yTL = (int) yDir;
         hit = 0;
@@ -365,11 +398,24 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
         SDL_RenderFillRect(renderer, &rect);
     }
 
-    //Side Right Sensor
+    //Side UPPER Right Sensor
     for (i = 0; i < 5; i++)
     {
-        xDir = round(robotCentreX+(ROBOT_WIDTH/2+SENSOR_VISION-sensor_sensitivity*i-2)*cos((robot->angle)*PI/180)-sin((robot->angle)*PI/180));
-        yDir = round(robotCentreY+(ROBOT_WIDTH/2+SENSOR_VISION-sensor_sensitivity*i-2)*sin((robot->angle)*PI/180)+cos((robot->angle)*PI/180));
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2+SENSOR_VISION-sensor_sensitivity*i-2)*cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2+SENSOR_VISION-sensor_sensitivity*i-2)*sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+
+        SDL_Rect rect = {xTL, yTL, sensor_sensitivity, 2};
+        SDL_SetRenderDrawColor(renderer, 80+(20*(5-i)), 80+(20*(5-i)), 80+(20*(5-i)), 255);
+        SDL_RenderDrawRect(renderer, &rect);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+    //Side LOWER Right Sensor
+    for (i = 0; i < 5; i++)
+    {
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2+SENSOR_VISION-sensor_sensitivity*i-2)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2+SENSOR_VISION-sensor_sensitivity*i-2)*sin((robot->angle)*PI/180)+(ROBOT_HEIGHT/2)*cos((robot->angle)*PI/180));
         xTL = (int) xDir;
         yTL = (int) yDir;
 
