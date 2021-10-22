@@ -108,12 +108,12 @@ int main(int argc, char *argv[]) {
 
             side_left_top_sensor = checkRobotSensorSideLeftTopAllWalls(&robot, head);
             if (side_left_top_sensor>0)
-                printf("Getting close on the side left. Score = %d\n", side_left_top_sensor);
+                printf("Getting close on the UPPER side left. Score = %d\n", side_left_top_sensor);
 
-           /* side_left_lower_sensor = checkRobotSensorSideLeftLowerAllWalls(&robot, head);
+            side_left_lower_sensor = checkRobotSensorSideLeftLowerAllWalls(&robot, head);
             if (side_left_lower_sensor>0)
-                printf("Getting close on the side left. Score = %d\n", side_left_lower_sensor);
-
+                printf("Getting close on the LOWER side left. Score = %d\n", side_left_lower_sensor);
+        /*
             side_right_top_sensor = checkRobotSensorSideRightTopAllWalls(&robot, head);
             if (side_right_top_sensor>0)
                 printf("Getting close on the side right. Score = %d\n", side_right_top_sensor);
