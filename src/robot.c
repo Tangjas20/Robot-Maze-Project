@@ -463,15 +463,21 @@ void robotMotorMove(struct Robot * robot) {
 }
 
 void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor) {
-
     if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
-        if (robot->currentSpeed<2)
-            robot->direction = UP;
-    }
+        if (robot->currentSpeed<5)
+            robot->direction = UP;//This speeds up the bot to a max value of 5 when there is no obstruction.
+    }   //We will need to add something that slows it down when there is an obstruction.
+
     //else if right sensor changes from 1< to 0, turn right
-    else if ((side_right_top_sensor == 1) && (front_right_sensor == 1) && (front_left_sensor == 0) && (side_left_top_sensor == 0)) {
+    else if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 1) && (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0){
         robot->direction = LEFT;
     }
+    else if((front_left_sensor > 0) && (front_right_sensor > 0) && (side_right_lower_sensor > 0) && (side_right_top_sensor > 0)){
+        robot->direction = LEFT;//This needs to turn left FASTER, Maybe find a way to make it trigger the LEFT event twice?
+    }//It would be good to have instead of robot->direction = LEFT; we have robot->direction = doubleLeft;
+
+
+
     //else if left sensor changes from 1< to 0, turn left
 
 
@@ -491,6 +497,5 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
 
 void robotFindRightWall(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor) {
     robot->direction = UP;
-    robot->direction = RIGHT;
     robot->direction = RIGHT;
 }
