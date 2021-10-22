@@ -31,16 +31,21 @@ void robotSuccess(struct Robot * robot, unsigned long msec);
 
 //Sensor Checking
 int checkRobotSensor(int x, int y, int sensorSensitivityLength, struct Wall * wall) ;
+
 int checkRobotSensorFrontRightAllWalls(struct Robot * robot, struct Wall_collection * head);
 int checkRobotSensorFrontLeftAllWalls(struct Robot * robot, struct Wall_collection * head);
-int checkRobotSensorSideRightAllWalls(struct Robot * robot, struct Wall_collection * head);
-int checkRobotSensorSideLeftAllWalls(struct Robot * robot, struct Wall_collection * head);
 
+int checkRobotSensorSideRightTopAllWalls(struct Robot * robot, struct Wall_collection * head);
+int checkRobotSensorSideRightLowerAllWalls(struct Robot * robot, struct Wall_collection * head);
+
+int checkRobotSensorSideLeftTopAllWalls(struct Robot * robot, struct Wall_collection * head);
+int checkRobotSensorSideLeftLowerAllWalls(struct Robot * robot, struct Wall_collection * head);
 //Visual Display
 void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot);
 
 //Movement
 void robotMotorMove(struct Robot * robot);
-void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor);
+void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor);
+void robotFindRightWall(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor);
 
 #endif // ROBOT_H_INCLUDED
