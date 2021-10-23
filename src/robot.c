@@ -384,7 +384,7 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
         SDL_RenderFillRect(renderer, &rect);
     }
 
-        //Side Left Bottom Sensor
+    //Side Left Bottom Sensor
     for (i = 0; i < 5; i++)
     {
         xDir = round(robotCentreX+(-ROBOT_WIDTH/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle)*PI/180)-(ROBOT_HEIGHT/2)*sin((robot->angle)*PI/180));
