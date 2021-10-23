@@ -27,7 +27,6 @@
 #include "robot.h"
 
 int done = 0;
-int initialCounter = 0;
 
 int main(int argc, char *argv[]) {
     SDL_Window *window;
@@ -44,6 +43,7 @@ int main(int argc, char *argv[]) {
     struct Robot robot;
     struct Wall_collection *head = NULL;
     int front_left_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_sensor, side_right_top_sensor, side_right_lower_sensor, front_right_sensor=0;
+    int initialCounter = 0;
     struct timeval start_time, end_time;
     gettimeofday(&start_time, 0);
     unsigned long msec;
@@ -77,13 +77,14 @@ int main(int argc, char *argv[]) {
         SDL_RenderClear(renderer);
 
         //Move robot based on user input commands/auto commands
-        if (robot.auto_mode == 1)
+        if (robot.auto_mode == 1) {
             if(initialCounter < 1){
                 robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
                 initialCounter++;
             } else {
-            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
+                robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
             }
+        }
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
@@ -94,8 +95,10 @@ int main(int argc, char *argv[]) {
             // msec = (end_time-start_time) * CLOCK_CALCULATION;
             robotSuccess(&robot, msec);
         }
-        else if(checkRobotHitWalls(&robot, head))
+        else if(checkRobotHitWalls(&robot, head)) {
             robotCrash(&robot);
+            initialCounter = 0;
+        }
         //Otherwise compute sensor information
         else {
             front_left_sensor = checkRobotSensorFrontLeftAllWalls(&robot, head);
@@ -113,7 +116,7 @@ int main(int argc, char *argv[]) {
             side_left_lower_sensor = checkRobotSensorSideLeftLowerAllWalls(&robot, head);
             if (side_left_lower_sensor>0)
                 printf("Getting close on the LOWER side left. Score = %d\n", side_left_lower_sensor);
-        
+
             side_right_top_sensor = checkRobotSensorSideRightTopAllWalls(&robot, head);
             if (side_right_top_sensor>0)
                 printf("Getting close on the UPPER side right. Score = %d\n", side_right_top_sensor);
@@ -121,7 +124,7 @@ int main(int argc, char *argv[]) {
             side_right_lower_sensor = checkRobotSensorSideRightLowerAllWalls(&robot, head);
             if (side_right_lower_sensor>0)
                 printf("Getting close on the LOWER side right. Score = %d\n", side_right_lower_sensor);
-                
+
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);
