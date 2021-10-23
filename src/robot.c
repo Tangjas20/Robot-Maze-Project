@@ -476,7 +476,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
         robot->direction = LEFT;//This needs to turn left FASTER, Maybe find a way to make it trigger the LEFT event twice?
     }//It would be good to have instead of robot->direction = LEFT; we have robot->direction = doubleLeft;
 
-
+    //else if top right sensor = 4, bottom right sensor = 2 stop then turn left
 
     //else if left sensor changes from 1< to 0, turn left
 
