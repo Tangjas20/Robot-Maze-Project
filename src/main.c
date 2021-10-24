@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
     struct Wall_collection *head = NULL;
     int front_left_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_sensor, side_right_top_sensor, side_right_lower_sensor, front_right_sensor=0;
     int initialCounter = 0;
+    int tracking = -1; // -1 for starting, 0 for left turn, 1 for right turn, 2 for tracking right wall, 3 for tracking left wall.
     struct timeval start_time, end_time;
     gettimeofday(&start_time, 0);
     unsigned long msec;
@@ -55,6 +56,7 @@ int main(int argc, char *argv[]) {
     // You describe position of top left corner of wall (x, y), then width and height going down/to right
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
+
     insertAndSetFirstWall(&head, 1,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2);
     insertAndSetFirstWall(&head, 2,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2+100, 10, OVERALL_WINDOW_HEIGHT/2-100);
     insertAndSetFirstWall(&head, 3,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+100, 150, 10);
@@ -68,6 +70,35 @@ int main(int argc, char *argv[]) {
     insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2-100, 10);
     insertAndSetFirstWall(&head, 12,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2+100, OVERALL_WINDOW_WIDTH/2-100, 10);
 
+    // insertAndSetFirstWall(&head, 1,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2+150, 5, OVERALL_WINDOW_HEIGHT/2-150);
+    // insertAndSetFirstWall(&head, 2,  OVERALL_WINDOW_WIDTH/2-75, OVERALL_WINDOW_HEIGHT/2+150, 5, OVERALL_WINDOW_HEIGHT/2-150);
+    // insertAndSetFirstWall(&head, 3,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2+150, 100, 5);
+    // insertAndSetFirstWall(&head, 4,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+150, 5, 50);
+    // insertAndSetFirstWall(&head, 5,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-225, 5, 50);
+    // insertAndSetFirstWall(&head, 6,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-175, 150, 5);
+    // insertAndSetFirstWall(&head, 7,  OVERALL_WINDOW_WIDTH/2-25, OVERALL_WINDOW_HEIGHT/2-25, 200, 5);
+    // insertAndSetFirstWall(&head, 8,  OVERALL_WINDOW_WIDTH/2+150,OVERALL_WINDOW_HEIGHT/2-125, 5, 50);
+    // insertAndSetFirstWall(&head, 9,  OVERALL_WINDOW_WIDTH/2+175,OVERALL_WINDOW_HEIGHT/2-25, 5, 225);
+    // insertAndSetFirstWall(&head, 10,  OVERALL_WINDOW_WIDTH/2+250,OVERALL_WINDOW_HEIGHT/2-175, 5, 300);
+    // insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2-100, 5);
+    // insertAndSetFirstWall(&head, 12,  OVERALL_WINDOW_WIDTH/2+250, OVERALL_WINDOW_HEIGHT/2+125, OVERALL_WINDOW_WIDTH/2-200, 5);
+    // insertAndSetFirstWall(&head, 13,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-120, 5, 95);
+    // insertAndSetFirstWall(&head, 14,  OVERALL_WINDOW_WIDTH/2-175, OVERALL_WINDOW_HEIGHT/2+75, 300, 5);
+    // insertAndSetFirstWall(&head, 15,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2-150, 5, 175);
+    // insertAndSetFirstWall(&head, 16,  OVERALL_WINDOW_WIDTH/2+25, OVERALL_WINDOW_HEIGHT/2-20, 5, 120);
+    // insertAndSetFirstWall(&head, 17,  OVERALL_WINDOW_WIDTH/2-300, OVERALL_WINDOW_HEIGHT/2+150, 225, 5);
+    // insertAndSetFirstWall(&head, 18,  OVERALL_WINDOW_WIDTH/2-300, OVERALL_WINDOW_HEIGHT/2-225, 5, 375);
+    // insertAndSetFirstWall(&head, 19,  OVERALL_WINDOW_WIDTH/2-300, OVERALL_WINDOW_HEIGHT/2-225, 400, 5);
+    // insertAndSetFirstWall(&head, 20,  OVERALL_WINDOW_WIDTH/2-225, OVERALL_WINDOW_HEIGHT/2-225, 5, 300);
+    // insertAndSetFirstWall(&head, 21,  OVERALL_WINDOW_WIDTH/2-225, OVERALL_WINDOW_HEIGHT/2-75, 50, 5);
+    // insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2-175, OVERALL_WINDOW_HEIGHT/2-25, 5, 100);
+    // insertAndSetFirstWall(&head, 23,  OVERALL_WINDOW_WIDTH/2-40, OVERALL_WINDOW_HEIGHT/2-75, 70, 5);
+    // insertAndSetFirstWall(&head, 24,  OVERALL_WINDOW_WIDTH/2-40, OVERALL_WINDOW_HEIGHT/2-125, 145, 5);
+    // insertAndSetFirstWall(&head, 25,  OVERALL_WINDOW_WIDTH/2-40, OVERALL_WINDOW_HEIGHT/2-175, 145, 5);
+    // insertAndSetFirstWall(&head, 26,  OVERALL_WINDOW_WIDTH/2+150,OVERALL_WINDOW_HEIGHT/2-125, 50, 5);
+    // insertAndSetFirstWall(&head, 27,  OVERALL_WINDOW_WIDTH/2+200,OVERALL_WINDOW_HEIGHT/2-125, 5, 55);
+    // insertAndSetFirstWall(&head, 28,  OVERALL_WINDOW_WIDTH/2+150,OVERALL_WINDOW_HEIGHT/2-75, 50, 5);
+
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
@@ -78,11 +109,11 @@ int main(int argc, char *argv[]) {
 
         //Move robot based on user input commands/auto commands
         if (robot.auto_mode == 1) {
-            if(initialCounter < 1){
-                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
+            if (initialCounter < 1){
+                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
-                robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
+                tracking = robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
             }
         }
         robotMotorMove(&robot);
@@ -98,6 +129,7 @@ int main(int argc, char *argv[]) {
         else if(checkRobotHitWalls(&robot, head)) {
             robotCrash(&robot);
             initialCounter = 0;
+            tracking = -1;
         }
         //Otherwise compute sensor information
         else {
@@ -153,6 +185,8 @@ int main(int argc, char *argv[]) {
             }
             if(state[SDL_SCANCODE_RETURN]){
                 robot.auto_mode = 1;
+                initialCounter = 0;
+                tracking = -1;
                 gettimeofday(&start_time, 0);
                 // start_time = clock();
             }
