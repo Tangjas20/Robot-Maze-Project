@@ -27,7 +27,6 @@
 #include "robot.h"
 
 int done = 0;
-int initialCounter = 0;
 
 int main(int argc, char *argv[]) {
     SDL_Window *window;
@@ -44,13 +43,13 @@ int main(int argc, char *argv[]) {
     struct Robot robot;
     struct Wall_collection *head = NULL;
     int front_left_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_sensor, side_right_top_sensor, side_right_lower_sensor, front_right_sensor=0;
+    int initialCounter = 0;
+    int tracking = -1; // -1 for starting, 0 for left turn, 1 for right turn, 2 for tracking right wall, 3 for tracking left wall.
     struct timeval start_time, end_time;
     gettimeofday(&start_time, 0);
     unsigned long msec;
     // clock_t start_time, end_time;
     // int msec;
-
-
    
     #include "mazeSetup.txt"
     setup_robot(&robot);
@@ -62,13 +61,15 @@ int main(int argc, char *argv[]) {
         SDL_RenderClear(renderer);
 
         //Move robot based on user input commands/auto commands
-        if (robot.auto_mode == 1)
-            if(initialCounter < 1){
-                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
+        if (robot.auto_mode == 1) {
+            if (initialCounter < 1){
+                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
-            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor);
+                tracking = robotAutoMotorMove2(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                printf("\n%d\n", tracking);
             }
+        }
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
@@ -79,8 +80,11 @@ int main(int argc, char *argv[]) {
             // msec = (end_time-start_time) * CLOCK_CALCULATION;
             robotSuccess(&robot, msec);
         }
-        else if(checkRobotHitWalls(&robot, head))
+        else if(checkRobotHitWalls(&robot, head)) {
             robotCrash(&robot);
+            initialCounter = 0;
+            tracking = -1;
+        }
         //Otherwise compute sensor information
         else {
             front_left_sensor = checkRobotSensorFrontLeftAllWalls(&robot, head);
@@ -98,7 +102,7 @@ int main(int argc, char *argv[]) {
             side_left_lower_sensor = checkRobotSensorSideLeftLowerAllWalls(&robot, head);
             if (side_left_lower_sensor>0)
                 printf("Getting close on the LOWER side left. Score = %d\n", side_left_lower_sensor);
-        
+
             side_right_top_sensor = checkRobotSensorSideRightTopAllWalls(&robot, head);
             if (side_right_top_sensor>0)
                 printf("Getting close on the UPPER side right. Score = %d\n", side_right_top_sensor);
@@ -106,7 +110,7 @@ int main(int argc, char *argv[]) {
             side_right_lower_sensor = checkRobotSensorSideRightLowerAllWalls(&robot, head);
             if (side_right_lower_sensor>0)
                 printf("Getting close on the LOWER side right. Score = %d\n", side_right_lower_sensor);
-                
+
         }
 
         robotUpdate(renderer, &robot);
@@ -136,6 +140,8 @@ int main(int argc, char *argv[]) {
             }
             if(state[SDL_SCANCODE_RETURN]){
                 robot.auto_mode = 1;
+                initialCounter = 0;
+                tracking = -1;
                 gettimeofday(&start_time, 0);
                 // start_time = clock();
             }
