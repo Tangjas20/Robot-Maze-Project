@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     // clock_t start_time, end_time;
     // int msec;
    
-    #include "mazeSetup.txt"
+    #include "mazeSetup2.txt"
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
