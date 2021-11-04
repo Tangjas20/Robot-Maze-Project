@@ -124,7 +124,8 @@ int main(int argc, char *argv[]) {
     
 
    
-    //#include "mazeSetup.txt"
+
+    #include "mazeSetup2.txt"
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
