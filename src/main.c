@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
   
-    
+    /*
     // Wall behind robot
     double key_num = insertAndSetDiagonalWall(&head, 1,  20, 0, 120, 0);
 
@@ -121,11 +121,11 @@ int main(int argc, char *argv[]) {
     key_num = insertAndSetDiagonalWall(&head, key_num+1,  430, 390, 490, 390);
     key_num = insertAndSetDiagonalWall(&head, key_num+1,  490, 290, 490, 390);
     // #include "mazeSetup2.txt"
-    
+    */
 
    
 
-    #include "mazeSetup2.txt"
+    #include "mazeSetup3.txt"
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
