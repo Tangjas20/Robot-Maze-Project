@@ -74,26 +74,6 @@
     //Top Left Fork vertical
     insertAndSetFirstWall(&head, 14,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2-120, 5, 20);
 
-    //insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2, 5);
-
-    
-
-    //insertAndSetFirstWall(&head, 15,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2-150, 5, 175);
-    //irstWall(&head, 16,  OVERALL_WINDOW_WIDTH/2+25, OVERALL_WINDOW_HEIGHT/2-20, 5, 120);
-    //insertAndSetFirstWall(&head, 17,  OVERALL_WINDOW_WIDTH/2-300, OVERALL_WINDOW_HEIGHT/2+150, 225, 5);
 
 
-
-
-
-
-    //insertAndSetFirstWall(&head, 20,  OVERALL_WINDOW_WIDTH/2-225, OVERALL_WINDOW_HEIGHT/2-225, 5, 300);
-    //insertAndSetFirstWall(&head, 21,  OVERALL_WINDOW_WIDTH/2-225, OVERALL_WINDOW_HEIGHT/2-75, 50, 5);
-    //insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2-175, OVERALL_WINDOW_HEIGHT/2-25, 5, 100);
-    //insertAndSetFirstWall(&head, 23,  OVERALL_WINDOW_WIDTH/2-40, OVERALL_WINDOW_HEIGHT/2-75, 70, 5);
-    //insertAndSetFirstWall(&head, 24,  OVERALL_WINDOW_WIDTH/2-40, OVERALL_WINDOW_HEIGHT/2-125, 145, 5);
-    //insertAndSetFirstWall(&head, 25,  OVERALL_WINDOW_WIDTH/2-40, OVERALL_WINDOW_HEIGHT/2-175, 145, 5);
-    //insertAndSetFirstWall(&head, 26,  OVERALL_WINDOW_WIDTH/2+150,OVERALL_WINDOW_HEIGHT/2-125, 50, 5);
-    //insertAndSetFirstWall(&head, 27,  OVERALL_WINDOW_WIDTH/2+200,OVERALL_WINDOW_HEIGHT/2-125, 5, 55);
-    //insertAndSetFirstWall(&head, 28,  OVERALL_WINDOW_WIDTH/2+150,OVERALL_WINDOW_HEIGHT/2-75, 50, 5);
-    
+  
