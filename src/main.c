@@ -57,19 +57,81 @@ int main(int argc, char *argv[]) {
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    insertAndSetFirstWall(&head, 1,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2);
-    insertAndSetFirstWall(&head, 2,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2+100, 10, OVERALL_WINDOW_HEIGHT/2-100);
-    insertAndSetFirstWall(&head, 3,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+100, 150, 10);
-    insertAndSetFirstWall(&head, 4,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2, 150, 10);
-    insertAndSetFirstWall(&head, 5,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2-200, 10, 300);
-    insertAndSetFirstWall(&head, 6,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2-100, 10, 100);
-    insertAndSetFirstWall(&head, 7,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2-200, 450, 10);
-    insertAndSetFirstWall(&head, 8,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2-100, 250, 10);
-    insertAndSetFirstWall(&head, 9,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2-200, 10, 300);
-    insertAndSetFirstWall(&head, 10,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-100, 10, 300);
-    insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2-100, 10);
-    insertAndSetFirstWall(&head, 12,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2+100, OVERALL_WINDOW_WIDTH/2-100, 10);
+    // insertAndSetFirstWall(&head, 1,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2);
+    // insertAndSetFirstWall(&head, 2,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2+100, 10, OVERALL_WINDOW_HEIGHT/2-100);
+    // insertAndSetFirstWall(&head, 3,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+100, 150, 10);
+    // insertAndSetFirstWall(&head, 4,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2, 150, 10);
+    // insertAndSetFirstWall(&head, 5,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2-200, 10, 300);
+    // insertAndSetFirstWall(&head, 6,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2-100, 10, 100);
+    // insertAndSetFirstWall(&head, 7,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2-200, 450, 10);
+    // insertAndSetFirstWall(&head, 8,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2-100, 250, 10);
+    // insertAndSetFirstWall(&head, 9,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2-200, 10, 300);
+    // insertAndSetFirstWall(&head, 10,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-100, 10, 300);
+    // insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2-100, 10);
+    // insertAndSetFirstWall(&head, 12,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2+100, OVERALL_WINDOW_WIDTH/2-100, 10);
+    
+    // Wall behind robot
+    double key_num = insertAndSetDiagonalWall(&head, 1,  20, 0, 120, 0);
 
+    // First corridor, getting smaller
+    key_num = insertAndSetDiagonalWall(&head, 1,  20, 0, 50, 440);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  120, 0, 100, 380);
+
+    // small path on bottom
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  50, 440, 200, 440);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  100, 380, 160, 380);
+
+    // first zig zag
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  200, 440, 300, 300);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  160, 380, 220, 300);
+
+    // second zig zag
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  300, 300, 200, 160);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  220, 300, 120, 160);
+
+    // third zig zag
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  200, 160, 270, 70);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  120, 160, 220, 20);
+
+    // long corridor on top
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  270, 70, 440, 70);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  220, 20, 500, 20);
+
+    // top diamond, top
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  440, 70, 360, 190);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  500, 20, 620, 190);
+
+    // top diamond, bottom
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  360, 190, 440, 290);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  620, 190, 550, 290);
+
+    // bottom triangle
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  440, 290, 360, 390);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  550, 290, 550, 390);
+
+    // top of bottom corridor
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  360, 390, 300, 390);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  550, 390, 650, 390);
+
+    // side of bottom corridor
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  300, 390, 300, 440);
+    
+    // bottom of bottom corridor
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  300, 440, 650, 440);
+
+    // middle diamond, top
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  420, 190, 490, 140);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  560, 190, 490, 140);
+
+    // middle diamond, bottom
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  420, 190, 490, 240);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  560, 190, 490, 240);
+
+    // right angle
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  430, 390, 490, 390);
+    key_num = insertAndSetDiagonalWall(&head, key_num+1,  490, 290, 490, 390);
+    // #include "mazeSetup2.txt"
+    
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
@@ -84,7 +146,31 @@ int main(int argc, char *argv[]) {
                 robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
+                tracking = robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                printf("\n%d\n", tracking);
+            }
+        } else if (robot.auto_mode == 2) {
+            if (initialCounter < 1){
+                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                initialCounter++;
+            } else {
                 tracking = robotAutoMotorMove2(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                printf("\n%d\n", tracking);
+            }
+        } else if (robot.auto_mode == 3) {
+            if (initialCounter < 1){
+                robotFindLeftWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                initialCounter++;
+            } else {
+                tracking = robotAutoMotorMove3(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                printf("\n%d\n", tracking);
+            }
+        } else if (robot.auto_mode == 4) {
+            if (initialCounter < 1){
+                robotFindLeftWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                initialCounter++;
+            } else {
+                tracking = robotAutoMotorMove4(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 printf("\n%d\n", tracking);
             }
         }
@@ -162,6 +248,35 @@ int main(int argc, char *argv[]) {
                 gettimeofday(&start_time, 0);
                 // start_time = clock();
             }
+            if(state[SDL_SCANCODE_Q]){
+                robot.auto_mode = 2;
+                initialCounter = 0;
+                tracking = -1;
+                gettimeofday(&start_time, 0);
+                // start_time = clock();
+            }
+            if(state[SDL_SCANCODE_W]){
+                robot.auto_mode = 3;
+                initialCounter = 0;
+                tracking = -1;
+                gettimeofday(&start_time, 0);
+                // start_time = clock();
+            }
+            if(state[SDL_SCANCODE_E]){
+                robot.auto_mode = 4;
+                initialCounter = 0;
+                tracking = -1;
+                gettimeofday(&start_time, 0);
+                // start_time = clock();
+            }
+            if(state[SDL_SCANCODE_R]){
+                robot.auto_mode = 0;
+                initialCounter = 0;
+                tracking = -1;
+                gettimeofday(&start_time, 0);
+                // start_time = clock();
+            }
+            
         }
 
         SDL_Delay(120);

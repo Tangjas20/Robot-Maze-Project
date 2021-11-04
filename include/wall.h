@@ -21,4 +21,6 @@ void wallUpdate(SDL_Renderer * renderer, struct Wall * wall);
 void insertFirstWall(struct Wall_collection ** head, int key, struct Wall * wall);
 void insertAndSetFirstWall(struct Wall_collection ** head, int key, int x, int y, int width, int height);
 void updateAllWalls(struct Wall_collection * head, SDL_Renderer * renderer);
+void horizontalwall(struct Wall_collection ** head,int length,int startx,int starty,int gorightanddown);
+int insertAndSetDiagonalWall(struct Wall_collection ** head, int key, int x1, int y1, int x2, int y2);
 #endif // WALL_H_INCLUDED

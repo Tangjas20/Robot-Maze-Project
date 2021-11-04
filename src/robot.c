@@ -1,17 +1,29 @@
 #include "robot.h"
 
 void setup_robot(struct Robot *robot){
-    robot->x = OVERALL_WINDOW_WIDTH/2-50;
-    robot->y = OVERALL_WINDOW_HEIGHT-50;
-    robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
-    robot->true_y = OVERALL_WINDOW_HEIGHT-50;
+    // robot->x = OVERALL_WINDOW_WIDTH/2-50;
+    // robot->y = OVERALL_WINDOW_HEIGHT-50;
+    // robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
+    // robot->true_y = OVERALL_WINDOW_HEIGHT-50;
+    // robot->width = ROBOT_WIDTH;
+    // robot->height = ROBOT_HEIGHT;
+    // robot->direction = 0;
+    // robot->angle = 0;
+    // robot->currentSpeed = 0;
+    // robot->crashed = 0;
+    // robot->auto_mode = 0;
+    
+    // Custom maze position
+    robot->x = 60;
+    robot->y = 20;
+    robot->true_x = 60;
+    robot->true_y = 20;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
-    robot->angle = 0;
+    robot->angle = 180;
     robot->currentSpeed = 0;
     robot->crashed = 0;
-    robot->auto_mode = 0;
 
     printf("Press arrow keys to move manually, or enter to move automatically\n\n");
 }
@@ -427,7 +439,6 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
 }
 
 
-
 void robotMotorMove(struct Robot * robot) {
     double x_offset, y_offset;
     switch(robot->direction){
@@ -464,42 +475,78 @@ void robotMotorMove(struct Robot * robot) {
 
 int robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor, int tracking) {
 
+    int maxSpeed = 3;
+    int rightTurnSpeed = 3;
+    int leftTurnSpeed = 1;
+    
     // FINDING INITIAL RIGHT WALL
     if (tracking == -1) {
 
-        if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
-            if (robot->currentSpeed < 6)
-                robot->direction = UP;
-        }
-
-        else if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 1) && (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0) {
+        //&& (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0
+        if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor > 0)) {
             robot->direction = LEFT;
-            if (tracking != 1) {
-                tracking = 2;
-            }
+            tracking = 2;
+        }
+        
+        else if (robot->currentSpeed == 0 && side_right_top_sensor > 0 && side_right_lower_sensor > 0 && side_right_top_sensor == side_right_lower_sensor && front_right_sensor == 0) {
+            tracking = 2;
+        }
+        
+        else if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
+            if (robot->currentSpeed < maxSpeed)
+                robot->direction = UP;
         }
     }
 
     // STRAIGHT, TRACKING ALONG THE WALL
     else if (tracking == 2) {
 
-        if ((front_left_sensor > 0) && (front_right_sensor > 0) && (side_right_lower_sensor > 0) && (side_right_top_sensor > 0)) {
-            if (robot->currentSpeed > 1) {
+        if (side_right_top_sensor <= 2 && side_right_top_sensor < side_right_lower_sensor) {
+            if (robot->currentSpeed > rightTurnSpeed) {
                 robot->direction = DOWN;
-            } else {
-                robot->direction = LEFT;
             }
-            tracking = 0;
+            else {
+                robot->direction = RIGHT;
+                tracking = 1; 
+            }
+        }
+        
+        // Left wall changed that from frontLeft > 0 || front_right > 0 for the narrow diagonal maze
+        else if (((front_left_sensor > 1) || (front_right_sensor > 2)) && ((side_right_lower_sensor > 0) || (side_right_top_sensor > 0)) || (front_right_sensor == front_left_sensor && front_right_sensor > 0)) {
+            if (side_left_top_sensor > 0) {
+                if (robot->currentSpeed > 0) {
+                    robot->direction = DOWN;
+                } else {
+                    robot->direction = LEFT;
+                    tracking = 0;
+                }
+            }
+            else {
+                if (robot->currentSpeed > leftTurnSpeed) {
+                    robot->direction = DOWN;
+                } else {
+                    robot->direction = LEFT;
+                    tracking = 0;
+                }
+            }
         }
 
-        else if (side_right_top_sensor == 0) {
-            robot->direction = RIGHT;
-            if (tracking != 1)
-                tracking = 1;
+        
+        else if (side_right_top_sensor > 0 && side_right_lower_sensor > 0 && side_left_top_sensor > 0 && side_left_lower_sensor > 0 && front_right_sensor > 0 && front_left_sensor > 0) {
+            if (robot->currentSpeed > 0) {
+                robot->direction = DOWN;
+            } else {
+                tracking = 50;
+            }
+        }
+        
+        // Curved wall tracking
+        else if (side_right_top_sensor > side_right_lower_sensor) {
+            robot->direction = LEFT;
         }
 
         else if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
-            if (robot->currentSpeed < 6)
+            if (robot->currentSpeed < maxSpeed)
                 robot->direction = UP;
         }
     }
@@ -507,15 +554,11 @@ int robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_ri
     // LEFT TURN
     else if (tracking == 0) {
 
-        if (side_right_top_sensor > 0 && front_right_sensor > 0) {
-            if (robot->currentSpeed > 4) {
-                robot->direction = DOWN;
-            } else {
-                robot->direction = LEFT;
-            }
+        if ((side_right_top_sensor > 0 || side_right_lower_sensor > 0) && (front_right_sensor > 2 || front_left_sensor > 1) || (front_right_sensor == front_left_sensor && front_right_sensor > 0)) {
+            robot->direction = LEFT;
         }
 
-        else if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 0) && (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0) {
+        else if ( ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0)) && (front_right_sensor == 0) && (front_left_sensor == 0)) {
             robot->direction = LEFT;
             tracking = 2;
         }
@@ -524,12 +567,28 @@ int robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_ri
     // RIGHT TURN
     else if (tracking == 1) {
 
-        if (side_right_top_sensor == 0) {
+        if (side_right_top_sensor <= 2 && side_right_top_sensor < side_right_lower_sensor) {
             robot->direction = RIGHT;
         }
 
-        else if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 0) && (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0){
+        else if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 0) && (front_left_sensor == 0)){
             // robot->direction = LEFT;
+            tracking = 2;
+        }
+        
+        else if (((front_left_sensor > 0) && (front_left_sensor == front_right_sensor)) && ((side_right_lower_sensor > 0) || (side_right_top_sensor > 0))) {
+            if (robot->currentSpeed > 0) {
+                robot->direction = DOWN;
+            }
+            tracking = 0;
+        }
+    }
+    
+    // 180 TURN DEAD END
+    else if (tracking >= 50 && tracking < 65) {
+        robot->direction = RIGHT;
+        tracking++;
+        if (tracking == 62) {
             tracking = 2;
         }
     }
@@ -543,16 +602,18 @@ int robotAutoMotorMove2(struct Robot * robot, int front_left_sensor, int front_r
     // FINDING INITIAL RIGHT WALL
     if (tracking == -1) {
 
-        if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
+        if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 1) && (front_left_sensor == 0)) {
+            robot->direction = LEFT;
+            tracking = 2;
+        }
+        
+        else if (robot->currentSpeed == 0 && side_right_top_sensor > 0 && side_right_lower_sensor > 0 && side_right_top_sensor == side_right_lower_sensor) {
+            tracking = 2;
+        }
+        
+        else if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
             if (robot->currentSpeed < 3)
                 robot->direction = UP;
-        }
-
-        else if ((side_right_top_sensor > 0) && (side_right_lower_sensor > 0) && (front_right_sensor == 1) && (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0) {
-            robot->direction = LEFT;
-            if (tracking != 1) {
-                tracking = 2;
-            }
         }
     }
 
@@ -581,41 +642,6 @@ int robotAutoMotorMove2(struct Robot * robot, int front_left_sensor, int front_r
                 robot->direction = UP;
         }
     }
-
-    // // LEFT TURN
-    // else if (tracking == 0) {
-
-    //     if (front_right_sensor > 0 || (side_right_top_sensor != side_right_lower_sensor)) {
-    //         if (robot->currentSpeed > 0) {
-    //             robot->direction = DOWN;
-    //         } else {
-    //             robot->direction = LEFT;
-    //         }
-    //     }
-
-    //     else if ((side_right_top_sensor == 3) && (side_right_lower_sensor == 3) && (front_right_sensor == 0) && (front_left_sensor == 0) && (side_left_top_sensor == 0) && side_left_lower_sensor == 0) {
-    //         // robot->direction = LEFT;
-    //         tracking = 2;
-    //     }
-    // }
-
-    // // RIGHT TURN
-    // else if (tracking == 1) {
-
-    //     if ((side_right_top_sensor != side_right_lower_sensor)) {
-    //         if (robot->currentSpeed > 1) {
-    //             robot->direction = DOWN;
-    //         } else {
-    //             robot->direction = RIGHT;
-    //         }
-    //     }
-        
-    //     else if (robot->currentSpeed == 1) {
-    //         // robot->direction = LEFT;
-    //         tracking = 10;
-    //     }
-
-    // }
     
     // 90 degree turn left
      else if (tracking >= 100) {
@@ -640,18 +666,134 @@ int robotAutoMotorMove2(struct Robot * robot, int front_left_sensor, int front_r
     // as soon is turn is completed, could lead to wrong turns since triggering event for right
     // is that the right sensors (top right) doesn't detect anything.
     else if (tracking == 10) {
-        if (robot->currentSpeed < 3)
-            robot->direction = UP;
-        else if ((side_right_lower_sensor > 0) && (front_right_sensor == 0) && (front_left_sensor == 0)){
+        if ((side_right_lower_sensor > 0) ){
             // robot->direction = LEFT;
+            if (robot->currentSpeed == 0)
+                robot->currentSpeed++;
             tracking = 2;
         }
+        
+        else if (((front_left_sensor > 2) || (front_right_sensor > 2)) && ((side_right_lower_sensor > 0) || (side_right_top_sensor > 0))) {
+            if (robot->currentSpeed > 0) {
+                robot->direction = DOWN;
+            }
+            tracking = 100;
+        }
+        
+        else if (robot->currentSpeed < 3)
+            robot->direction = UP;
     }
 
     return tracking;
 }
 
+// LEFT PRECISION
+int robotAutoMotorMove3(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor, int tracking) {
+
+    // FINDING INITIAL LEFT WALL
+    if (tracking == -1) {
+
+        if ((side_left_top_sensor > 0) && (side_left_lower_sensor > 0) && (front_left_sensor > 0) && (front_right_sensor == 0)) {
+            robot->direction = RIGHT;
+            tracking = 2;
+        }
+        
+        else if (robot->currentSpeed == 0 && side_left_top_sensor > 0 && side_left_lower_sensor > 0 && side_left_top_sensor == side_left_lower_sensor) {
+            tracking = 2;
+        }
+        
+        else if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
+            if (robot->currentSpeed < 3)
+                robot->direction = UP;
+        }
+    }
+
+    // STRAIGHT, TRACKING ALONG THE WALL
+    else if (tracking == 2) {
+
+        if ( ((front_left_sensor > 2) || (front_right_sensor > 2)) && ((side_left_lower_sensor > 0) || (side_left_top_sensor > 0))) {
+            if (robot->currentSpeed > 0) {
+                robot->direction = DOWN;
+            } else {
+                // robot->direction = LEFT;
+                tracking = 50;
+            }
+        }
+
+        else if ( side_left_lower_sensor == 0) {
+            if (robot->currentSpeed > 1) {
+                robot->direction = DOWN;
+            } else {
+                tracking = 100;
+            }
+        }
+
+        else if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
+            if (robot->currentSpeed < 3)
+                robot->direction = UP;
+        }
+    }
+    
+    // 90 degree turn left
+     else if (tracking >= 100) {
+        robot->direction = LEFT;
+        tracking++;
+        if (tracking == 106) {
+            tracking = 10;
+        }
+    }
+    
+    // 90 degree turn right
+    else if (tracking >= 50 && tracking < 60) {
+        robot->direction = RIGHT;
+        tracking++;
+        if (tracking == 56) {
+            tracking = 10;
+        }
+    }
+    
+    // For the bot to know that it's finished the right/left turn, the side right lower sensor
+    // has to detect the right wall. Otherwise, prematurely assume that the wall is being tracked
+    // as soon is turn is completed, could lead to wrong turns since triggering event for right
+    // is that the right sensors (top right) doesn't detect anything.
+    else if (tracking == 10) {
+        if ((side_left_lower_sensor > 0) ){
+            // robot->direction = LEFT;
+            if (robot->currentSpeed == 0)
+                robot->currentSpeed++;
+            tracking = 2;
+        }
+        
+        else if (((front_left_sensor > 2) || (front_right_sensor > 2)) && ((side_left_lower_sensor > 0) || (side_left_top_sensor > 0))) {
+            if (robot->currentSpeed > 0) {
+                robot->direction = DOWN;
+            }
+            tracking = 50;
+        }
+        
+        else if (robot->currentSpeed < 3)
+            robot->direction = UP;
+    }
+
+    return tracking;
+}
+
+int robotAutoMotorMove4(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor, int tracking) {
+    return 0;
+}
+
 void robotFindRightWall(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor, int tracking) {
-    robot->direction = UP;
-    robot->direction = RIGHT;
+    if (side_right_top_sensor > 0 && side_right_lower_sensor > 0 && side_right_top_sensor == side_right_lower_sensor) {
+        robot->direction = UP;
+    } else {
+        robot->direction = RIGHT;
+    }
+}
+
+void robotFindLeftWall(struct Robot * robot, int front_left_sensor, int front_right_sensor, int side_left_top_sensor, int side_left_lower_sensor, int side_right_top_sensor, int side_right_lower_sensor, int tracking) {
+    if (side_left_top_sensor > 0 && side_left_lower_sensor > 0 && side_left_top_sensor == side_left_lower_sensor) {
+        robot->direction = UP;
+    } else {
+        robot->direction = LEFT;
+    }
 }
