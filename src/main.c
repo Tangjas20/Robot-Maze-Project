@@ -58,8 +58,7 @@ int main(int argc, char *argv[]) {
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-  
-    
+    /*
     // Wall behind robot
     double key_num = insertAndSetDiagonalWall(&head, 1,  20, 0, 120, 0);
 
@@ -121,11 +120,69 @@ int main(int argc, char *argv[]) {
     key_num = insertAndSetDiagonalWall(&head, key_num+1,  430, 390, 490, 390);
     key_num = insertAndSetDiagonalWall(&head, key_num+1,  490, 290, 490, 390);
     // #include "mazeSetup2.txt"
+    */
+
+    // #include "mazeSetup2.txt"
     
+    #include "math.h"   
 
-   
+ int i;
+    insertAndSetFirstWall(&head, 12,  120, 450, 10, 30);
+    insertAndSetFirstWall(&head, 12,  220, 450, 10, 30);
+    for (i = 0; i < 100; i++){
+        insertAndSetFirstWall(&head, i,  20 + i , 350 + i, 10, 10); //1
+        insertAndSetFirstWall(&head, i,  20 +100 + i , 350 + i, 10, 10); //1
+    }
+    insertAndSetFirstWall(&head, 12,  20, 280, 10, 70);
+    insertAndSetFirstWall(&head, 12,  120, 280, 10, 70);
+    for (i = 0; i < 180; i++){
+        insertAndSetFirstWall(&head, i,  20 +190 - i/2 , 100 + i, 10, 10); //1
+    }
+    for (i = 0; i < 105; i++){
+        insertAndSetFirstWall(&head, i,  20 +105/2 - i/2 , 175 + i, 10, 10); //1
+    }
+    insertAndSetFirstWall(&head, 2,  20, 175, 105/2, 10);
+    insertAndSetFirstWall(&head, 2,  20, 20, 10, 155);
+    insertAndSetFirstWall(&head, 2,  20, 20, 300, 10);
+    insertAndSetFirstWall(&head, 2,  320, 20, 10, 60);
+    insertAndSetFirstWall(&head, 2,  80, 100, 130, 10);
+    insertAndSetFirstWall(&head, 2,  80, 80, 10, 20);
+    insertAndSetFirstWall(&head, 2,  80, 80, 160, 10);
 
-    #include "mazeSetup2.txt"
+    double j;
+    for (i = 0; i < 50; i++){
+        j = i;
+        insertAndSetFirstWall(&head, i+1,
+                              // the most important bit is below.
+                              // increase the 20 for a tighter bend
+                              // descrease for a more meandering flow
+                              320 + 30*sin(10*j * M_PI/180),
+                              // increase the 5 for a spacier curve
+                              (i * 5)+80,
+                              10, 10);
+    }
+    for (i = 0; i < 75; i++){
+        j = i;
+        insertAndSetFirstWall(&head, i+1,
+                              // the most important bit is below.
+                              // increase the 20 for a tighter bend
+                              // descrease for a more meandering flow
+                              240 + 30*sin(10*j * M_PI/180),
+                              // increase the 5 for a spacier curve
+                              (i * 5)+80,
+                              10, 10);
+    }
+    insertAndSetFirstWall(&head, 2,  345, 330, 105, 10);
+    insertAndSetFirstWall(&head, 2,  450, 190, 10, 150);
+    insertAndSetFirstWall(&head, 2,  380, 190, 70, 10);
+    insertAndSetFirstWall(&head, 2,  380, 20, 10, 170);
+    insertAndSetFirstWall(&head, 2,  380, 20, 260, 10);
+
+    insertAndSetFirstWall(&head, 2,  255, 455, 345, 10);
+    insertAndSetFirstWall(&head, 2,  600, 100, 10, 365);
+    insertAndSetFirstWall(&head, 2,  530, 100, 70, 10);
+    insertAndSetFirstWall(&head, 2,  530, 80, 10, 20);
+    insertAndSetFirstWall(&head, 2,  530, 80, 110, 10);
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
@@ -137,7 +194,7 @@ int main(int argc, char *argv[]) {
         //Move robot based on user input commands/auto commands
         if (robot.auto_mode == 1) {
             if (initialCounter < 1){
-                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                tracking = robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
                 tracking = robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
@@ -145,7 +202,7 @@ int main(int argc, char *argv[]) {
             }
         } else if (robot.auto_mode == 2) {
             if (initialCounter < 1){
-                robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                tracking = robotFindRightWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
                 tracking = robotAutoMotorMove2(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
@@ -153,7 +210,7 @@ int main(int argc, char *argv[]) {
             }
         } else if (robot.auto_mode == 3) {
             if (initialCounter < 1){
-                robotFindLeftWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                tracking = robotFindLeftWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
                 tracking = robotAutoMotorMove3(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
@@ -161,7 +218,7 @@ int main(int argc, char *argv[]) {
             }
         } else if (robot.auto_mode == 4) {
             if (initialCounter < 1){
-                robotFindLeftWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
+                tracking = robotFindLeftWall(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
                 initialCounter++;
             } else {
                 tracking = robotAutoMotorMove4(&robot, front_left_sensor, front_right_sensor, side_left_top_sensor, side_left_lower_sensor, side_right_top_sensor, side_right_lower_sensor, tracking);
@@ -171,7 +228,7 @@ int main(int argc, char *argv[]) {
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
-        if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT/2+100, 10, 100)){
+        if (checkRobotReachedEnd(&robot, 220, 480, 100, 10)){
             gettimeofday(&end_time, 0);
             msec = ((end_time.tv_sec - start_time.tv_sec)*1000)+(end_time.tv_usec - start_time.tv_usec)/1000;
             // end_time = clock();

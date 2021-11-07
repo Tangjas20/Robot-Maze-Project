@@ -1,0 +1,36 @@
+    insertAndSetFirstWall(&head, 1,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2+50, 10, 200);// right wall below small
+    insertAndSetFirstWall(&head, 2,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+100, 10, OVERALL_WINDOW_HEIGHT/2-10);// moist left bottomwall
+    insertAndSetFirstWall(&head, 3,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+100, 150, 10);// hori line on top of robot
+    insertAndSetFirstWall(&head, 4,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2, 200, 10);// horizontal line aft first left turn
+    insertAndSetFirstWall(&head, 5,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2-200, 10, 300);//most left wall
+    insertAndSetFirstWall(&head, 6,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2-200, 10, 200);//vertical line at top left
+    insertAndSetFirstWall(&head, 7,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2-200, 600, 10);//top wall
+    insertAndSetFirstWall(&head, 8,  OVERALL_WINDOW_WIDTH/2-50, OVERALL_WINDOW_HEIGHT/2-100, 150, 10);// hori line on top of key 4
+    insertAndSetFirstWall(&head, 9,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2-150, 10, 250);//most right wall long
+    insertAndSetFirstWall(&head, 10,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2-100, 10, 300);// long left wall oppisite to most right wall edit make hole
+    insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2-100, 10);//btoom wall of exit
+    insertAndSetFirstWall(&head, 12,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2+100, OVERALL_WINDOW_WIDTH/2-100, 10);// topwall of exit
+    insertAndSetFirstWall(&head, 13,  OVERALL_WINDOW_WIDTH/2-150, OVERALL_WINDOW_HEIGHT/2, 10, OVERALL_WINDOW_HEIGHT/2-200);//ver lin left side of narrow turn
+    insertAndSetFirstWall(&head, 14,  OVERALL_WINDOW_WIDTH/2-250, OVERALL_WINDOW_HEIGHT/2+230, 250, 10);//bottom line
+    insertAndSetFirstWall(&head, 15,  OVERALL_WINDOW_WIDTH/2-100, OVERALL_WINDOW_HEIGHT/2+50, 10, 125);//vertical gap right to robot
+    insertAndSetFirstWall(&head, 16,  OVERALL_WINDOW_WIDTH/2-200, OVERALL_WINDOW_HEIGHT/2-100, 100, 10);//horizontaltop left
+    insertAndSetFirstWall(&head, 17,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2+200, 100, 10);
+    insertAndSetFirstWall(&head, 18,  OVERALL_WINDOW_WIDTH/2-50, OVERALL_WINDOW_HEIGHT/2-150, 10, 100);
+    insertAndSetFirstWall(&head, 19,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2-150, 10, 100);
+    insertAndSetFirstWall(&head, 20,  OVERALL_WINDOW_WIDTH/2, OVERALL_WINDOW_HEIGHT/2-150, 100, 10);
+    insertAndSetFirstWall(&head, 21,  OVERALL_WINDOW_WIDTH/2+310, OVERALL_WINDOW_HEIGHT/2-200, 10, 300);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+275, OVERALL_WINDOW_HEIGHT/2-100, 10, 50);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+240, OVERALL_WINDOW_HEIGHT/2-100, 10, 50);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+240, OVERALL_WINDOW_HEIGHT/2-100, 40, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+240, OVERALL_WINDOW_HEIGHT/2-60, 40, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+175, OVERALL_WINDOW_HEIGHT/2+100, 10, 40);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+125, OVERALL_WINDOW_HEIGHT/2+100, 10, 40);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+110, OVERALL_WINDOW_HEIGHT/2+170, 10, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2+170, 10, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+120, OVERALL_WINDOW_HEIGHT/2+180, 80, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+150, OVERALL_WINDOW_HEIGHT/2, 10, 40);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+120, OVERALL_WINDOW_HEIGHT/2-50, 10, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+175, OVERALL_WINDOW_HEIGHT/2-50, 10, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+150, OVERALL_WINDOW_HEIGHT/2-100, 10, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+140, OVERALL_WINDOW_HEIGHT/2, 30, 10);
+    insertAndSetFirstWall(&head, 22,  OVERALL_WINDOW_WIDTH/2+140, OVERALL_WINDOW_HEIGHT/2+40, 30, 10);
