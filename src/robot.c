@@ -1,6 +1,6 @@
 #include "robot.h"
 
-void setup_robot(struct Robot *robot){
+/*void setup_robot(struct Robot *robot){
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
     robot->y = OVERALL_WINDOW_HEIGHT-50;
     robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
@@ -11,26 +11,30 @@ void setup_robot(struct Robot *robot){
     robot->angle = 0;
     robot->currentSpeed = 0;
     robot->crashed = 0;
+    robot->auto_mode = 0;*/
+    //Maze 5
+void setup_robot(struct Robot *robot){
+    robot->x = 170;
+    robot->y = 460;
+    robot->true_x = 170;
+    robot->true_y = 460;
+    robot->width = ROBOT_WIDTH;
+    robot->height = ROBOT_HEIGHT;
+    robot->direction = 0;
+    robot->angle = 0;
+    robot->currentSpeed = 0;
+    robot->crashed = 0;
     robot->auto_mode = 0;
+
+    printf("Press arrow keys to move manually, or enter to move automatically\n\n");
     
-    // robot->x = 620;
-    // robot->y = 40;
-    // robot->true_x = 620;
-    // robot->true_y = 40;
-    // robot->width = ROBOT_WIDTH;
-    // robot->height = ROBOT_HEIGHT;
-    // robot->direction = 0;
-    // robot->angle = 270;
-    // robot->currentSpeed = 0;
-    // robot->crashed = 0;
-    // robot->auto_mode = 0;
-    
+
     printf("\nPress arrow keys to move manually.\n");
     printf("R to reset back to manual mode.\n");
     printf("SPACE to restart the level.\n\n");
     printf("Automatic movement controls:\n");
     printf("ENTER for Speed Mode, Right Wall\n");
-    printf("Q for Precision Mode, Left Wall\n");
+    printf("Q for Precision Mode, RIght Wall\n");
     printf("W for Precision Mode, Left Wall\n");
     printf("E for Speed Mode, Left Wall\n\n");
     
