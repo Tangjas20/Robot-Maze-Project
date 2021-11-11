@@ -58,137 +58,74 @@ int main(int argc, char *argv[]) {
     // Relative positions are used (OVERALL_WINDOW_WIDTH and OVERALL_WINDOW_HEIGHT)
     // But you can use absolute positions. 10 is used as the width, but you can change this.
 
-    /*
-    // Wall behind robot
-    double key_num = insertAndSetDiagonalWall(&head, 1,  20, 0, 120, 0);
-
-    // First corridor, getting smaller
-    key_num = insertAndSetDiagonalWall(&head, 1,  20, 0, 50, 440);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  120, 0, 100, 380);
-
-    // small path on bottom
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  50, 440, 200, 440);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  100, 380, 160, 380);
-
-    // first zig zag
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  200, 440, 300, 300);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  160, 380, 220, 300);
-
-    // second zig zag
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  300, 300, 200, 160);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  220, 300, 120, 160);
-
-    // third zig zag
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  200, 160, 270, 70);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  120, 160, 220, 20);
-
-    // long corridor on top
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  270, 70, 440, 70);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  220, 20, 500, 20);
-
-    // top diamond, top
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  440, 70, 360, 190);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  500, 20, 620, 190);
-
-    // top diamond, bottom
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  360, 190, 440, 290);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  620, 190, 550, 290);
-
-    // bottom triangle
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  440, 290, 360, 390);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  550, 290, 550, 390);
-
-    // top of bottom corridor
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  360, 390, 300, 390);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  550, 390, 650, 390);
-
-    // side of bottom corridor
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  300, 390, 300, 440);
-    
-    // bottom of bottom corridor
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  300, 440, 650, 440);
-
-    // middle diamond, top
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  420, 190, 490, 140);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  560, 190, 490, 140);
-
-    // middle diamond, bottom
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  420, 190, 490, 240);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  560, 190, 490, 240);
-
-    // right angle
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  430, 390, 490, 390);
-    key_num = insertAndSetDiagonalWall(&head, key_num+1,  490, 290, 490, 390);
-    // #include "mazeSetup2.txt"
-    */
-
-    // #include "mazeSetup2.txt"
+    #include "mazeSetup2.txt"
     
     #include "math.h"   
 
- int i;
-    insertAndSetFirstWall(&head, 12,  120, 450, 10, 30);
-    insertAndSetFirstWall(&head, 12,  220, 450, 10, 30);
-    for (i = 0; i < 100; i++){
-        insertAndSetFirstWall(&head, i,  20 + i , 350 + i, 10, 10); //1
-        insertAndSetFirstWall(&head, i,  20 +100 + i , 350 + i, 10, 10); //1
-    }
-    insertAndSetFirstWall(&head, 12,  20, 280, 10, 70);
-    insertAndSetFirstWall(&head, 12,  120, 280, 10, 70);
-    for (i = 0; i < 180; i++){
-        insertAndSetFirstWall(&head, i,  20 +190 - i/2 , 100 + i, 10, 10); //1
-    }
-    for (i = 0; i < 105; i++){
-        insertAndSetFirstWall(&head, i,  20 +105/2 - i/2 , 175 + i, 10, 10); //1
-    }
-    insertAndSetFirstWall(&head, 2,  20, 175, 105/2, 10);
-    insertAndSetFirstWall(&head, 2,  20, 20, 10, 155);
-    insertAndSetFirstWall(&head, 2,  20, 20, 300, 10);
-    insertAndSetFirstWall(&head, 2,  320, 20, 10, 60);
-    insertAndSetFirstWall(&head, 2,  80, 100, 130, 10);
-    insertAndSetFirstWall(&head, 2,  80, 80, 10, 20);
-    insertAndSetFirstWall(&head, 2,  80, 80, 160, 10);
+//  int i;
+//     insertAndSetFirstWall(&head, 12,  120, 450, 10, 30);
+//     insertAndSetFirstWall(&head, 12,  220, 450, 10, 30);
+//     for (i = 0; i < 100; i++){
+//         insertAndSetFirstWall(&head, i,  20 + i , 350 + i, 10, 10); //1
+//         insertAndSetFirstWall(&head, i,  20 +100 + i , 350 + i, 10, 10); //1
+//     }
+//     insertAndSetFirstWall(&head, 12,  20, 280, 10, 70);
+//     insertAndSetFirstWall(&head, 12,  120, 280, 10, 70);
+//     for (i = 0; i < 180; i++){
+//         insertAndSetFirstWall(&head, i,  20 +190 - i/2 , 100 + i, 10, 10); //1
+//     }
+//     for (i = 0; i < 105; i++){
+//         insertAndSetFirstWall(&head, i,  20 +105/2 - i/2 , 175 + i, 10, 10); //1
+//     }
+//     insertAndSetFirstWall(&head, 2,  20, 175, 105/2, 10);
+//     insertAndSetFirstWall(&head, 2,  20, 20, 10, 155);
+//     insertAndSetFirstWall(&head, 2,  20, 20, 300, 10);
+//     insertAndSetFirstWall(&head, 2,  320, 20, 10, 60);
+//     insertAndSetFirstWall(&head, 2,  80, 100, 130, 10);
+//     insertAndSetFirstWall(&head, 2,  80, 80, 10, 20);
+//     insertAndSetFirstWall(&head, 2,  80, 80, 160, 10);
 
-    double j;
-    for (i = 0; i < 50; i++){
-        j = i;
-        insertAndSetFirstWall(&head, i+1,
-                              // the most important bit is below.
-                              // increase the 20 for a tighter bend
-                              // descrease for a more meandering flow
-                              320 + 30*sin(10*j * M_PI/180),
-                              // increase the 5 for a spacier curve
-                              (i * 5)+80,
-                              10, 10);
-    }
-    for (i = 0; i < 75; i++){
-        j = i;
-        insertAndSetFirstWall(&head, i+1,
-                              // the most important bit is below.
-                              // increase the 20 for a tighter bend
-                              // descrease for a more meandering flow
-                              240 + 30*sin(10*j * M_PI/180),
-                              // increase the 5 for a spacier curve
-                              (i * 5)+80,
-                              10, 10);
-    }
-    insertAndSetFirstWall(&head, 2,  345, 330, 105, 10);
-    insertAndSetFirstWall(&head, 2,  450, 190, 10, 150);
-    insertAndSetFirstWall(&head, 2,  380, 190, 70, 10);
-    insertAndSetFirstWall(&head, 2,  380, 20, 10, 170);
-    insertAndSetFirstWall(&head, 2,  380, 20, 260, 10);
+//     double j;
+//     for (i = 0; i < 50; i++){
+//         j = i;
+//         insertAndSetFirstWall(&head, i+1,
+//                               // the most important bit is below.
+//                               // increase the 20 for a tighter bend
+//                               // descrease for a more meandering flow
+//                               320 + 30*sin(10*j * M_PI/180),
+//                               // increase the 5 for a spacier curve
+//                               (i * 5)+80,
+//                               10, 10);
+//     }
+//     for (i = 0; i < 75; i++){
+//         j = i;
+//         insertAndSetFirstWall(&head, i+1,
+//                               // the most important bit is below.
+//                               // increase the 20 for a tighter bend
+//                               // descrease for a more meandering flow
+//                               240 + 30*sin(10*j * M_PI/180),
+//                               // increase the 5 for a spacier curve
+//                               (i * 5)+80,
+//                               10, 10);
+//     }
+//     insertAndSetFirstWall(&head, 2,  345, 330, 105, 10);
+//     insertAndSetFirstWall(&head, 2,  450, 190, 10, 150);
+//     insertAndSetFirstWall(&head, 2,  380, 190, 70, 10);
+//     insertAndSetFirstWall(&head, 2,  380, 20, 10, 170);
+//     insertAndSetFirstWall(&head, 2,  380, 20, 260, 10);
 
-    insertAndSetFirstWall(&head, 2,  255, 455, 345, 10);
-    insertAndSetFirstWall(&head, 2,  600, 100, 10, 365);
-    insertAndSetFirstWall(&head, 2,  530, 100, 70, 10);
-    insertAndSetFirstWall(&head, 2,  530, 80, 10, 20);
-    insertAndSetFirstWall(&head, 2,  530, 80, 110, 10);
+//     insertAndSetFirstWall(&head, 2,  255, 455, 345, 10);
+//     insertAndSetFirstWall(&head, 2,  600, 100, 10, 365);
+//     insertAndSetFirstWall(&head, 2,  530, 100, 70, 10);
+//     insertAndSetFirstWall(&head, 2,  530, 80, 10, 20);
+//     insertAndSetFirstWall(&head, 2,  530, 80, 110, 10);
+
     setup_robot(&robot);
     updateAllWalls(head, renderer);
 
     SDL_Event event;
     while(!done){
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+        SDL_SetRenderDrawColor(renderer, 90, 90, 90, 255);
         SDL_RenderClear(renderer);
 
         //Move robot based on user input commands/auto commands
