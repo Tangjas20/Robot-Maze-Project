@@ -1,6 +1,10 @@
 # ELEC1601 Robot-Maze Project
 
-Template by Chris. P taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template
+Project template by Chris. P taken from https://github.sydney.edu.au/cpol3526/ELEC1601-project-template
+Maze code and Tinkercad written and completed by Nathan Y, Jason T.
+Link to TinkerCAD: https://www.tinkercad.com/things/j64wAJAjZFP
+
+Maps created by Jason T, Axton C and Lachlan L
 
 ## Table of Contents
 
